@@ -11,12 +11,12 @@ router.route('/all').get((req, res) =>{
         if(error){
             console.log("--------error", error);
         }else{
-            if (result.next_offset) {
-                callOffset(result.next_offset, result.list,(dates) => {
-                    res.json(dates);
-                });
-            }
-            // res.json(result.list);
+            // if (result.next_offset) {
+            //     callOffset(result.next_offset, result.list,(dates) => {
+            //         res.json(dates);
+            //     });
+            // }
+            res.json(result.list);
         }
     });
 });
