@@ -11,12 +11,11 @@ router.route('/all').get((req, res) =>{
         if(error){
             console.log("--------error", error);
         }else{
-            // if (result.next_offset) {
-            //     callOffset(result.next_offset, result.list,(dates) => {
-            //         res.json(dates);
-            //     });
-            // }
-            res.json(result.list);
+            if (result.next_offset) {
+                callOffset(result.next_offset, result.list,(dates) => {
+                    res.json(dates);
+                });
+            }
         }
     });
 });
@@ -29,6 +28,7 @@ async function callOffset (next, before,cb) {
               "sort_by[desc]": "created_at",
               "offset": next
             }).request(function(err, response) {
+                console.log('---------length', allData.length);
                 if(response.next_offset) {
                     allData = [...allData, ...response.list];
                     callOffset(response.next_offset, allData, cb);
