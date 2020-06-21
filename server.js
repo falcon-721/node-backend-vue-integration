@@ -11,13 +11,6 @@ const port = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 
-app.use('/', express.static(path.resolve(__dirname, './dist')));
-
-app.get('*', function(req, res) {
-    res.sendFile(path.resolve(__dirname, './dist/index.html'));
-    res.end();
-});
-
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true });
 
@@ -32,6 +25,13 @@ connection.once('open', () => {
 const chargebeeRouter = require('./api/routes/RouteModel');
 
 app.use('/chargebee', chargebeeRouter);
+
+app.use('/', express.static(path.resolve(__dirname, './dist')));
+
+app.get('*', function(req, res) {
+    res.sendFile(path.resolve(__dirname, './dist/index.html'));
+    res.end();
+});
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
