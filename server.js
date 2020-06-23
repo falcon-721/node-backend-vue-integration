@@ -11,14 +11,14 @@ const port = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 
-const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true });
+// const uri = process.env.ATLAS_URI;
+// mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 
-const connection = mongoose.connection;
+// const connection = mongoose.connection;
 
-connection.once('open', () => {
-    console.log("MongoDB database connection established successfully");
-});
+// connection.once('open', () => {
+//     console.log("MongoDB database connection established successfully");
+// });
 
 
 // chargebee routes
