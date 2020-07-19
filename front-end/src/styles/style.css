@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css?family=Avenir&display=swap');
+.api-body {
+    position: relative;
+}
+.all-member-tbl {
+    padding: 10px;
+}
+.all-member-tbl h2 {
+    font-size: 15px;
+    font-weight: bold;
+    float: left;
+}
+.loading-area {
+    position: absolute;
+    top: 40vh;
+    right: 40vw;
+}
+.download-btn {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.select-bar {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.select-bar input {
+    border: none;
+}
+.select-bar input:focus {
+    outline: none;
+}
+.select-bar .vdp-datepicker {
+    border-radius: 10px;
+    border: 1px solid grey;
+    padding: 5px 10px;
+    margin-left: 20px;
+}
+.left-section {
+    display: flex;
+    align-items: center;
+}
+.select-bar select {
+    padding: 10px 5px;
+    border-radius: 10px;
+}
+.select-bar select:focus {
+    outline: none;
+}
+.select-area {
+    margin: 15px;
+}
+.select-area button {
+    box-shadow: 0 0 3px grey;
+    margin-right: 10px;
+    border-radius: 10px;
+    border: none;
+}
+.select-area button:focus {
+    outline: none;
+}
+.select-area button:active {
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 2px rgba(0, 0, 0, 0.19);
+}
+.right-section {
+    display: flex;
+    align-items: center;
+}
+table.total-tbl {
+    padding: 5px;
+    border-collapse: collapse;
+    margin: auto;
+    margin-bottom: 20px;
+}
+table.total-tbl td{
+    width: 30vw;
+    border: 1px solid black;
+    padding: 6px;
+    text-align: center;
+}
+th {
+    font-weight: bold;
+    font-size: 20px !important;
+}
