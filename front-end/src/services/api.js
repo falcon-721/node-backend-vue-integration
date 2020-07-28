@@ -11,7 +11,10 @@ Vue.use(VueFlashMessage, {
 });
 
 const vm = new Vue();
-const baseURL = 'https://api-integration1.herokuapp.com/chargebee';
+
+const baseURL = 'https://3peat.dev/chargebee';
+
+//const baseURL = 'https://api-integration1.herokuapp.com/chargebee';
 // const baseURL = 'http://3peatdigital.com/api/backend/chargebee';
 // const baseURL = 'http://localhost:4000/chargebee';
 
@@ -22,7 +25,11 @@ const handleError = fn => (...params) =>
 
 export const api = {
   getChargebees: handleError(async () => {
-    const res = await axios.get(baseURL + '/all');
+    const res = await axios.get(baseURL + '/all.php');
+
+
+
+
     return res.data;
   })
   // gettasks: handleError(async () => {
