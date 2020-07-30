@@ -10,7 +10,7 @@
                     calendar-button-icon="fa fa-calendar"
                     :calendar-button="true"
                     :clear-button="true"
-                    :placeholder="'When?'"
+                    :placeholder="'Till When?'"
                     @selected="changeDate"
                 />
             </div>
@@ -225,6 +225,7 @@ export default {
                 // chargebee
                 this.chargebeeData.forEach(item => {
                     // all member
+
                     if (moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate() <= moment(date).toDate()) {
                         this.json_data[0].count += 1;
                     }
