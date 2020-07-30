@@ -14,9 +14,12 @@ const vm = new Vue();
 
 const baseURL = 'https://3peat.dev/chargebee';
 
+//const baseURL = 'http://localhost/api/chargebee';
+
+
 //const baseURL = 'https://api-integration1.herokuapp.com/chargebee';
-// const baseURL = 'http://3peatdigital.com/api/backend/chargebee';
-// const baseURL = 'http://localhost:4000/chargebee';
+// const baseURL = 'http://3peatdigital.com/api/backend/chargebee'; 
+//const baseURL = 'http://localhost:4000/chargebee';
 
 const handleError = fn => (...params) =>
   fn(...params).catch(error => {

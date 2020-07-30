@@ -198,6 +198,7 @@ router.route('/all').get((req, res) =>{
     //         // }
     // });
 
+/*    
     chargebee.subscription.list({
         "limit": 100,
         "sort_by[desc]" : "created_at",
@@ -220,26 +221,26 @@ router.route('/all').get((req, res) =>{
             }
         }
     });
-
+*/
     // find chargebee data
-    // db.chargebeeDB.find()
-    //     .then(data => {
-    //         console.log('data', data);
+     db.chargebeeDB.find()
+         .then(data => {
+             console.log('data', data);
 
-    //         // total data
-    //         let totalData = {
-    //             chargebee: data
-    //         };
+             // total data
+             let totalData = {
+                 chargebee: data
+             };
 
-    //         // find activecampaign data
-    //         db.activeDB.find()
-    //             .then(response => {
-    //                 totalData["activecampaign"] = response;
-    //                 res.json(totalData);
-    //             })
-    //             .catch(err => console.log('Error', err));
-    //     })
-    //     .catch(err => res.status(400).json(err));
+             // find activecampaign data
+             db.activeDB.find()
+                 .then(response => {
+                     totalData["activecampaign"] = response;
+                     res.json(totalData);
+                 })
+                 .catch(err => console.log('Error', err));
+         })
+         .catch(err => res.status(400).json(err));
 });
 
 async function callOffset (next, before,cb) {
