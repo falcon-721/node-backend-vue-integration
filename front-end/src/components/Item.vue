@@ -151,13 +151,13 @@ let basic_data = [
     },
 ];
 
+let perday = 60 * 60 * 24 * 1000;
+
 export default {
   name: 'Item',
   components: {
     downloadexcel,
     Datepicker,
-    // Chargebee,
-    // ActiveCampaign,
     mdbIcon
   },
   data () {
@@ -166,8 +166,6 @@ export default {
         activeFlag: false,
         chargebeeData: null,
         activecampaignData: null,
-        // chargebee_data: null,
-        // active_data: null,
         loadingFlag: true,
         filename: "All_Members",
         date: null,
@@ -177,20 +175,6 @@ export default {
             'Metric': 'metric',
             'Totals': 'count'
         },
-        // chargebee_json_fields: {
-        //     'Email': 'id',
-        //     'Recurring Items': 'recurring',
-        //     'Status': 'status',
-        //     'Created At': 'created_at',
-        //     'Next Billing At': 'next_billing'
-        // },
-        // active_json_fields: {
-        //     'Full Name': 'name',
-        //     'Email': 'email',
-        //     'Phone': 'phone',
-        //     'Account': 'account',
-        //     'Date Created': 'date_created'
-        // },
         json_data: null,
         json_meta: [
             [
@@ -242,22 +226,22 @@ export default {
                     }
 
                     // new monthly basic purchase
-                    if (item.subscription.billing_period_unit !== "year" && (now.getMonth() === moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate().getMonth() && now.getYear() === moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate().getYear()) && (moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate() <= moment(date).toDate())) {
+                    if (item.subscription.billing_period_unit !== "year" && (date.getMonth() === moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate().getMonth() && date.getYear() === moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate().getYear()) && (moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate() <= moment(date).toDate())) {
                         this.json_data[3].count += 1;
                     }
 
                     // monthly basic cancellations
-                    if (item.subscription.billing_period_unit !== "year" && item.subscription.status === "cancelled" && item.subscription.billing_period == 1 && (moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate() <= moment(date).toDate())) {
+                    if (item.subscription.billing_period_unit === "month" && (date.getMonth() === moment(item.subscription.cancelled_at, "YYYY-MM-DD hh:mm:ss").toDate().getMonth() && date.getYear() === moment(item.subscription.cancelled_at, "YYYY-MM-DD hh:mm:ss").toDate().getYear()) && (moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate() <= moment(date).toDate())) {
                         this.json_data[4].count += 1;
                     }
 
                     // monthly premier purchase members
-                    if (item.subscription.billing_period_unit === "year" && item.subscription.status === "cancelled" && item.subscription.billing_period == 1 && (moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate() <= moment(date).toDate())) {
+                    if (item.subscription.billing_period_unit === "year" && (date.getMonth() === moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate().getMonth() && date.getYear() === moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate().getYear()) && (moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate() <= moment(date).toDate())) {
                         this.json_data[5].count += 1;
                     }
 
                     // premier schedule members
-                    if (item.subscription.billing_period_unit === "year" && item.subscription.billing_period == 1 && (moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate() <= moment(date).toDate())) {
+                    if (item.subscription.billing_period_unit === "year" && item.subscription.status === "active" && ((date.getMonth()) + 1 === moment(item.subscription.next_billing_at, "YYYY-MM-DD hh:mm:ss").toDate().getMonth() && date.getYear() === moment(item.subscription.next_billing_at, "YYYY-MM-DD hh:mm:ss").toDate().getYear()) && (moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate() <= moment(date).toDate())) {
                         this.json_data[6].count += 1;
                     }
                 });
@@ -312,18 +296,18 @@ export default {
                     }
 
                     // monthly basic cancellations
-                    if (item.subscription.billing_period_unit !== "year" && item.subscription.status === "cancelled" && item.subscription.billing_period == 1) {
-                        this.json_data[4].count += 1;
+                    if (item.subscription.billing_period_unit === "month" && (now.getMonth() === moment(item.subscription.cancelled_at, "YYYY-MM-DD hh:mm:ss").toDate().getMonth() && now.getYear() === moment(item.subscription.cancelled_at, "YYYY-MM-DD hh:mm:ss").toDate().getYear())) {
+                        basic_data[4].count += 1;
                     }
 
                     // monthly premier purchase members
-                    if (item.subscription.billing_period_unit === "year" && item.subscription.status === "cancelled" && item.subscription.billing_period == 1) {
-                        this.json_data[5].count += 1;
+                    if (item.subscription.billing_period_unit === "year" && (now.getMonth() === moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate().getMonth() && now.getYear() === moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate().getYear())) {
+                        basic_data[5].count += 1;
                     }
 
                     // premier schedule members
-                    if (item.subscription.billing_period_unit === "year" && item.subscription.billing_period == 1) {
-                        this.json_data[6].count += 1;
+                    if (item.subscription.billing_period_unit === "year" && item.subscription.status === "active" && ((now.getMonth()) + 1 === moment(item.subscription.next_billing_at, "YYYY-MM-DD hh:mm:ss").toDate().getMonth() && now.getYear() === moment(item.subscription.next_billing_at, "YYYY-MM-DD hh:mm:ss").toDate().getYear())) {
+                        basic_data[6].count += 1;
                     }
                 });
 
@@ -354,15 +338,6 @@ export default {
             }
         }
     }
-    // changeStyle: function (style) {
-    //     if (this.activeFlag) {
-    //         if (style === 1) {
-    //             this.chargebeeFlag = true;
-    //         } else {
-    //             this.chargebeeFlag = false;
-    //         }
-    //     }
-    // }
   },
   async mounted () {
     let totalData = await api.getChargebees();
@@ -373,46 +348,6 @@ export default {
     this.chargebeeData = totalData.chargebee[0].chargebee;
     this.activecampaignData = totalData.activecampaign;
     // save data from chargebee
-    // let chargebeeTables = [];
-    // totalData.chargebee[0].chargebee.forEach(item => {
-    //     let tableItem = {};
-    //     tableItem["id"] = item.customer.email;
-
-    //     // check basic or premier
-    //     if (item.subscription.billing_period_unit === "year") {
-    //         tableItem["recurring"] = "Premier Member";
-    //     } else {
-    //         tableItem["recurring"] = "Basic Member";
-    //     }
-
-    //     switch (item.subscription.status) {
-    //         case "future":
-    //             tableItem["status"] = "FUTURE";
-    //             break;
-    //         case "in_trial":
-    //             tableItem["status"] = "IN TRIAL";
-    //             break;
-    //         case "active":
-    //             tableItem["status"] = "ACTIVE";
-    //             break;
-    //         case "non_renewing":
-    //             tableItem["status"] = "NON RENEWING";
-    //             break;
-    //         case "paused":
-    //             tableItem["status"] = "PAUSED";
-    //             break;
-    //         case "cancelled":
-    //             tableItem["status"] = "CANCELLED";
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    //     tableItem["created_at"] = moment(item.subscription.created_at * 1000).format("DD-MM-YYYY");
-    //     tableItem["next_billing"] = moment(item.subscription.next_billing_at * 1000).format("DD-MM-YYYY");
-    //     chargebeeTables.push(tableItem);
-    // });
-
-    // this.chargebee_data = chargebeeTables;
     this.loadingFlag = false;
     
     basic_data[0].count = totalData.chargebee[0].chargebee.length; // all members
@@ -435,34 +370,20 @@ export default {
         }
 
         // monthly basic cancellations
-        if (item.subscription.billing_period_unit !== "year" && item.subscription.status === "cancelled" && item.subscription.billing_period == 1) {
+        if (item.subscription.billing_period_unit === "month" && (now.getMonth() === moment(item.subscription.cancelled_at, "YYYY-MM-DD hh:mm:ss").toDate().getMonth() && now.getYear() === moment(item.subscription.cancelled_at, "YYYY-MM-DD hh:mm:ss").toDate().getYear())) {
             basic_data[4].count += 1;
         }
 
         // monthly premier purchase members
-        if (item.subscription.billing_period_unit === "year" && item.subscription.status === "cancelled" && item.subscription.billing_period == 1) {
+        if (item.subscription.billing_period_unit === "year" && (now.getMonth() === moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate().getMonth() && now.getYear() === moment(item.subscription.created_at, "YYYY-MM-DD hh:mm:ss").toDate().getYear())) {
             basic_data[5].count += 1;
         }
 
         // premier schedule members
-        if (item.subscription.billing_period_unit === "year" && item.subscription.billing_period == 1) {
+        if (item.subscription.billing_period_unit === "year" && item.subscription.status === "active" && ((now.getMonth()) + 1 === moment(item.subscription.next_billing_at, "YYYY-MM-DD hh:mm:ss").toDate().getMonth() && now.getYear() === moment(item.subscription.next_billing_at, "YYYY-MM-DD hh:mm:ss").toDate().getYear())) {
             basic_data[6].count += 1;
         }
     });
-
-    // save activecampaign data
-    // let activecampaignTables = [];
-    // totalData.activecampaign.forEach(item => {
-    //     let table = {};
-    //     table["name"] = item.full_name;
-    //     table["email"] = item.email;
-    //     table["phone"] = item.phone;
-    //     table["account"] = item.account;
-    //     table["date_created"] = moment(item.created_at).add(8, "hours").format("MM/DD/YYYY hh:mm a");
-    //     activecampaignTables.push(table);
-    // });
-
-    // this.active_data = activecampaignTables;
 
     // search activecampaign
     basic_data[7].count = totalData.activecampaign.length; // activecampaign all members
